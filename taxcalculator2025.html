@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f06, #4a90e2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .calculator {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .calculator h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #4a90e2;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 18px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .footer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        /* Animation for button */
+        .button:active {
+            transform: scale(0.98);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 20px;
+            }
+
+            .button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h2>Income Tax Calculator</h2>
+        <label for="income">Enter Your Income (₹):</label>
+        <input type="number" id="income" placeholder="Enter your income" />
+
+        <button class="button" onclick="calculateTax()">Calculate Tax</button>
+
+        <div class="result" id="result"></div>
+
+        <div class="footer">
+            <p>Designed to help you calculate income tax based on the latest slabs.</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateTax() {
+            var income = parseFloat(document.getElementById("income").value);
+            var tax = 0;
+
+            // Income tax logic based on new income slabs
+            if (income <= 400000) {
+                tax = 0;
+            } else if (income > 400000 && income <= 800000) {
+                tax = 0.05 * (income - 400000);
+            } else if (income > 800000 && income <= 1200000) {
+                tax = 0.05 * (800000 - 400000) + 0.10 * (income - 800000);
+            } else if (income > 1200000 && income <= 1600000) {
+                tax = 0.05 * (800000 - 400000) + 0.10 * (1200000 - 800000) + 0.15 * (income - 1200000);
+            } else if (income > 1600000 && income <= 2000000) {
+                tax = 0.05 * (800000 - 400000) + 0.10 * (1200000 - 800000) + 0.15 * (1600000 - 1200000) + 0.20 * (income - 1600000);
+            } else if (income > 2000000 && income <= 2400000) {
+                tax = 0.05 * (800000 - 400000) + 0.10 * (1200000 - 800000) + 0.15 * (1600000 - 1200000) + 0.20 * (2000000 - 1600000) + 0.25 * (income - 2000000);
+            } else {
+                tax = 0.05 * (800000 - 400000) + 0.10 * (1200000 - 800000) + 0.15 * (1600000 - 1200000) + 0.20 * (2000000 - 1600000) + 0.25 * (2400000 - 2000000) + 0.30 * (income - 2400000);
+            }
+
+            // Show the result with animations
+            var resultElement = document.getElementById("result");
+            if (tax > 0) {
+                resultElement.innerHTML = `The tax you need to pay is <span style="color: #4CAF50;">₹${tax.toFixed(2)}</span>`;
+            } else {
+                resultElement.innerHTML = `<span style="color: #FF5722;">No tax is applicable for income below ₹4,00,000</span>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
